@@ -1,0 +1,7 @@
+deps:
+	go install github.com/zpatrick/go-sdata
+
+stores:
+	go-sdata models/movie.go Movie --package stores > stores/movie_store.go
+
+.PHONY: deps stores

@@ -1,0 +1,25 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "fUKKIqq8gVIMELi/ZKFTD4gGMNA=",
+			"path": "github.com/zpatrick/fireball",
+			"revision": "6073a278ddee57b5055bfc56e84446b79f240d63",
+			"revisionTime": "2016-10-04T01:01:28Z"
+		},
+		{
+			"checksumSHA1": "/bBdFQuDolVtbaD/HZPXEhUoMFQ=",
+			"path": "github.com/zpatrick/go-config",
+			"revision": "2aa1afeb9715ac98543f73232c8784a2425e91c5",
+			"revisionTime": "2016-09-27T21:42:17Z"
+		},
+		{
+			"checksumSHA1": "DnalEAaQlSAqUZRYVI6W7t3PXVY=",
+			"path": "github.com/zpatrick/go-sdata/container",
+			"revision": "b45e82698f7bfe9b3b313a768f0db0eb8fb095e2",
+			"revisionTime": "2016-09-26T22:46:09Z"
+		}
+	],
+	"rootPath": "github.com/zpatrick/TheBlackPearl/api"
+}
