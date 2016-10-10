@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/zpatrick/TheBlackPearl/api/controllers"
+	"github.com/zpatrick/TheBlackPearl/api/models"
 	"github.com/zpatrick/TheBlackPearl/api/stores"
 	"github.com/zpatrick/fireball"
 	"github.com/zpatrick/go-config"
@@ -15,16 +16,33 @@ func main() {
 	movieStore := getMovieStore()
 	movieController := controllers.NewMovieController(movieStore)
 
+	movie := &models.Movie{
+		ID:          "1",
+		Title:       "Gladiator",
+		Description: "string",
+		PosterURL:   "http://google.com",
+	}
+	movieStore.Insert(movie).Execute()
+
 	routes := fireball.Decorate(
 		movieController.Routes(),
 		fireball.LogDecorator(),
 	)
 
 	app := fireball.NewApp(routes)
-	log.Println("Running on port 80")
-	log.Fatal(http.ListenAndServe(":80", app))
+	app.Before = enableCORS
+
+	log.Println("Running on port 8000")
+	log.Fatal(http.ListenAndServe(":8000", app))
 
 	log.Println(c.StringOr("aws.access_key", "none"))
+}
+
+func enableCORS(w http.ResponseWriter, r *http.Request) {
+	origin := r.Header.Get("Origin")
+	w.Header().Set("Access-Control-Allow-Origin", origin)
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token, Authorization")
 }
 
 func initConfig() *config.Config {

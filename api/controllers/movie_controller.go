@@ -41,6 +41,7 @@ func (m *MovieController) ListMovies(c *fireball.Context) (fireball.Response, er
 		return nil, err
 	}
 
+	movies = models.SortMovies(movies)
 	return fireball.NewJSONResponse(200, movies)
 }
 
