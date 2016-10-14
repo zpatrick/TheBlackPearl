@@ -7,9 +7,12 @@ var hashHistory = ReactRouter.hashHistory;
 var MainContainer = require('../containers/MainContainer');
 var MovieContainer = require('../containers/MovieContainer');
 
+
+var someAuthCheck = function(nextState, transition) { console.log('here')}
+
 var routes = (
   <Router history={hashHistory}>
-    <Route path='/' component={MainContainer} >
+    <Route path='/' component={MainContainer} onEnter={someAuthCheck}>
       <Route path='/movies' component={MovieContainer} />
     </Route>
   </Router>
