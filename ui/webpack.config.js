@@ -6,6 +6,9 @@ var HTMLWebpackPluginConfig = new HtmlWebpackPlugin({
 });
 
 module.exports = {
+  devServer: {
+    disableHostCheck: true,
+  },
   entry: [
     './app/index.js'
   ],
@@ -25,3 +28,5 @@ module.exports = {
   },
   plugins: [HTMLWebpackPluginConfig]
 };
+~
+
