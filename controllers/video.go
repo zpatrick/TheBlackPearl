@@ -18,12 +18,18 @@ func NewVideoController(s video.Store) *VideoController {
 	}
 }
 
-func (h *VideoController) Routes() []*fireball.Route {
+func (v *VideoController) Routes() []*fireball.Route {
 	routes := []*fireball.Route{
 		{
-			Path: "/video",
+			Path: "/videos",
 			Handlers: fireball.Handlers{
-				"GET": h.listVideos,
+				"GET": v.listVideos,
+			},
+		},
+		{
+			Path: "/videos/:videoID",
+			Handlers: fireball.Handlers{
+				"GET": v.getVideo,
 			},
 		},
 	}
@@ -66,6 +72,16 @@ func (v *VideoController) listVideos(c *fireball.Context) (fireball.Response, er
 		reduce(videos)
 	}
 
-	// todo: return html
-	return nil, nil
+	return c.HTML(200, "videos/list_videos.html", videos)
+}
+
+func (v *VideoController) getVideo(c *fireball.Context) (fireball.Response, error) {
+	videoID := c.PathVariables["videoID"]
+	video, err := v.store.GetVideo(videoID)
+	if err != nil {
+		// todo: capture this case in error decorator
+		return nil, err
+	}
+
+	return c.HTML(200, "videos/get_video.html", video)
 }
