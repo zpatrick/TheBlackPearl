@@ -2,8 +2,9 @@ package video
 
 type Video struct {
 	ID      string
-	Name    string
+	Title   string
 	Path    string
+	Poster  string
 	Series  string
 	Season  string
 	Episode string

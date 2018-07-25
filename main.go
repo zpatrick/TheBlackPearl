@@ -30,13 +30,13 @@ Design:
 Bucket Layout:
   - Use a single folder (should probably pass in a param from cli, with 'videos/' as default)
   - The file name is the movie name, e.g. 'Inception.mp4'
-  - For series, the file name is always <Series> - S<season #>E<episode #>, e.g. 'The Office - S1E1.mp4' 
+  - For series, the file name is always <Series> - S<season #>E<episode #>, e.g. 'The Office - S1E1.mp4'
   - All other metadata, series, season, picture, etc., is recorded via tags
 
 Cache:
   - Use a wrapper store that caches results
   - Cache expires every 30 minutes
-  - Include a button in the website's header to refresh   
+  - Include a button in the website's header to refresh
 */
 
 const (

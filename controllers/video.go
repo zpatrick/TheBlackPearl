@@ -69,7 +69,7 @@ func (v *VideoController) listVideos(c *fireball.Context) (fireball.Response, er
 	}
 
 	for _, reduce := range reducers {
-		reduce(videos)
+		videos = reduce(videos)
 	}
 
 	return c.HTML(200, "videos/list_videos.html", videos)

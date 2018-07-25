@@ -14,6 +14,7 @@ const (
 	SeriesTag       = "Series"
 	SeasonTag       = "Season"
 	EpisodeTag      = "Episode"
+	PosterTag       = "Poster"
 )
 
 type S3Store struct {
@@ -41,10 +42,14 @@ func (s *S3Store) ListVideos() ([]Video, error) {
 			return nil, err
 		}
 
-		// todo: ID, Name
+		split := strings.Split(key, "/")
+		title := strings.TrimSuffix(split[len(split)-1], ".mp4")
+
 		videos[i] = Video{
 			ID:      base64.StdEncoding.EncodeToString([]byte(key)),
+			Title:   title,
 			Path:    key,
+			Poster:  tags[PosterTag],
 			Series:  tags[SeriesTag],
 			Season:  tags[SeasonTag],
 			Episode: tags[EpisodeTag],

@@ -5,6 +5,7 @@ import "strings"
 type Reducer func([]Video) []Video
 
 func NewSearchReducer(search string) Reducer {
+	words := strings.Split(strings.ToLower(search), " ")
 	return func(videos []Video) []Video {
 		if search == "" {
 			return []Video{}
@@ -12,8 +13,17 @@ func NewSearchReducer(search string) Reducer {
 
 		results := make([]Video, 0, len(videos))
 		for i := 0; i < len(videos); i++ {
-			if strings.Contains(videos[i].Name, search) {
-				results = append(results, videos[i])
+			title := strings.ToLower(videos[i].Title)
+			series := strings.ToLower(videos[i].Series)
+
+			for _, word := range words {
+				if strings.Contains(title, word) {
+					results = append(results, videos[i])
+					break
+				} else if strings.Contains(series, word) {
+					results = append(results, videos[i])
+					break
+				}
 			}
 		}
 
@@ -23,30 +33,26 @@ func NewSearchReducer(search string) Reducer {
 
 func NewLimitReducer(limit int) Reducer {
 	return func(videos []Video) []Video {
-		if limit <= 0 {
+		switch {
+		case limit < 0:
 			return []Video{}
+		case limit > len(videos):
+			return videos
+		default:
+			return videos[:limit]
 		}
-
-		results := make([]Video, 0, len(videos))
-		for i := 0; i < limit && i < len(videos); i++ {
-			results = append(results, videos[i])
-		}
-
-		return results
 	}
 }
 
 func NewStartReducer(start int) Reducer {
 	return func(videos []Video) []Video {
-		if start < 0 || start >= len(videos) {
+		switch {
+		case start < 0:
 			return []Video{}
+		case start > len(videos):
+			return []Video{}
+		default:
+			return videos[start:]
 		}
-
-		results := make([]Video, 0, len(videos)-start)
-		for i := 0; i < len(videos[start:]); i++ {
-			results = append(results, videos[start+i])
-		}
-
-		return results
 	}
 }

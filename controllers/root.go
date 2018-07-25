@@ -28,6 +28,8 @@ func (r *RootController) Routes() []*fireball.Route {
 	return routes
 }
 
+// The css/html: https://www.w3schools.com/w3css/tryw3css_templates_portfolio.htm
+// https://www.w3schools.com/w3css/tryit.asp?filename=tryw3css_templates_portfolio&stacked=h
 func (r *RootController) getRoot(c *fireball.Context) (fireball.Response, error) {
 	return c.HTML(200, "root.html", nil)
 }

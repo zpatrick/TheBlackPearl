@@ -18,29 +18,39 @@ func TestSearchReducer(t *testing.T) {
 			Expected: []Video{},
 		},
 		"empty search": {
-			Input:    []Video{{Name: "alpha"}, {Name: "beta"}, {Name: "charlie"}},
+			Input:    []Video{{Title: "alpha"}, {Title: "beta"}, {Title: "charlie"}},
 			Search:   "",
 			Expected: []Video{},
 		},
 		"exact": {
-			Input:    []Video{{Name: "alpha"}, {Name: "beta"}, {Name: "charlie"}},
+			Input:    []Video{{Title: "alpha"}, {Title: "beta"}, {Title: "charlie"}},
 			Search:   "beta",
-			Expected: []Video{{Name: "beta"}},
+			Expected: []Video{{Title: "beta"}},
 		},
 		"all": {
-			Input:    []Video{{Name: "alpha"}, {Name: "beta"}, {Name: "charlie"}},
+			Input:    []Video{{Title: "alpha"}, {Title: "beta"}, {Title: "charlie"}},
 			Search:   "a",
-			Expected: []Video{{Name: "alpha"}, {Name: "beta"}, {Name: "charlie"}},
+			Expected: []Video{{Title: "alpha"}, {Title: "beta"}, {Title: "charlie"}},
 		},
 		"subset": {
-			Input:    []Video{{Name: "alpha"}, {Name: "beta"}, {Name: "charlie"}},
+			Input:    []Video{{Title: "alpha"}, {Title: "beta"}, {Title: "charlie"}},
 			Search:   "e",
-			Expected: []Video{{Name: "beta"}, {Name: "charlie"}},
+			Expected: []Video{{Title: "beta"}, {Title: "charlie"}},
 		},
 		"none": {
-			Input:    []Video{{Name: "alpha"}, {Name: "beta"}, {Name: "charlie"}},
+			Input:    []Video{{Title: "alpha"}, {Title: "beta"}, {Title: "charlie"}},
 			Search:   "delta",
 			Expected: []Video{},
+		},
+		"series": {
+			Input:    []Video{{Title: "alpha", Series: "delta"}, {Title: "beta"}, {Title: "charlie"}},
+			Search:   "delta",
+			Expected: []Video{{Title: "alpha", Series: "delta"}},
+		},
+		"multiple words": {
+			Input:    []Video{{Title: "alpha"}, {Title: "beta"}, {Title: "charlie"}},
+			Search:   "alpha beta",
+			Expected: []Video{{Title: "alpha"}, {Title: "beta"}},
 		},
 	}
 
@@ -64,24 +74,24 @@ func TestLimitReducer(t *testing.T) {
 			Expected: []Video{},
 		},
 		"zero": {
-			Input:    []Video{{Name: "a"}, {Name: "b"}, {Name: "c"}},
+			Input:    []Video{{Title: "a"}, {Title: "b"}, {Title: "c"}},
 			Limit:    0,
 			Expected: []Video{},
 		},
 		"less_than": {
-			Input:    []Video{{Name: "a"}, {Name: "b"}, {Name: "c"}},
+			Input:    []Video{{Title: "a"}, {Title: "b"}, {Title: "c"}},
 			Limit:    2,
-			Expected: []Video{{Name: "a"}, {Name: "b"}},
+			Expected: []Video{{Title: "a"}, {Title: "b"}},
 		},
 		"equal": {
-			Input:    []Video{{Name: "a"}, {Name: "b"}, {Name: "c"}},
+			Input:    []Video{{Title: "a"}, {Title: "b"}, {Title: "c"}},
 			Limit:    3,
-			Expected: []Video{{Name: "a"}, {Name: "b"}, {Name: "c"}},
+			Expected: []Video{{Title: "a"}, {Title: "b"}, {Title: "c"}},
 		},
 		"greater_than": {
-			Input:    []Video{{Name: "a"}, {Name: "b"}, {Name: "c"}},
+			Input:    []Video{{Title: "a"}, {Title: "b"}, {Title: "c"}},
 			Limit:    4,
-			Expected: []Video{{Name: "a"}, {Name: "b"}, {Name: "c"}},
+			Expected: []Video{{Title: "a"}, {Title: "b"}, {Title: "c"}},
 		},
 	}
 
@@ -105,22 +115,22 @@ func TestStartReducer(t *testing.T) {
 			Expected: []Video{},
 		},
 		"zero": {
-			Input:    []Video{{Name: "a"}, {Name: "b"}, {Name: "c"}},
+			Input:    []Video{{Title: "a"}, {Title: "b"}, {Title: "c"}},
 			Start:    0,
-			Expected: []Video{{Name: "a"}, {Name: "b"}, {Name: "c"}},
+			Expected: []Video{{Title: "a"}, {Title: "b"}, {Title: "c"}},
 		},
 		"less_than": {
-			Input:    []Video{{Name: "a"}, {Name: "b"}, {Name: "c"}},
+			Input:    []Video{{Title: "a"}, {Title: "b"}, {Title: "c"}},
 			Start:    1,
-			Expected: []Video{{Name: "b"}, {Name: "c"}},
+			Expected: []Video{{Title: "b"}, {Title: "c"}},
 		},
 		"equal": {
-			Input:    []Video{{Name: "a"}, {Name: "b"}, {Name: "c"}},
+			Input:    []Video{{Title: "a"}, {Title: "b"}, {Title: "c"}},
 			Start:    3,
 			Expected: []Video{},
 		},
 		"greater_than": {
-			Input:    []Video{{Name: "a"}, {Name: "b"}, {Name: "c"}},
+			Input:    []Video{{Title: "a"}, {Title: "b"}, {Title: "c"}},
 			Start:    4,
 			Expected: []Video{},
 		},
