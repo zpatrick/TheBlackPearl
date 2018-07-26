@@ -1,2 +1,23 @@
-<h1>Videos</h1>
-{{ . }}
+{{ template "partials/layout" . }}
+<div class="w3-row-padding w3-center">
+    <div class="w3-col w3-center">
+      <img src="{{ .Poster }}">
+    </div>
+  </div>
+
+<div class="w3-container w3-padding-large w3-center" style="margin-bottom:32px">
+    <h4><b>{{ .Title }}</b></h4>
+    <p class="w3-text-grey">
+    {{ if .Series }} {{ .Series }} {{ end }} 
+    {{ if .Season }} | Season {{ .Season }} {{ end }} 
+    {{ if .Episode }} | Episode {{ .Episode }} {{ end }}
+    </p>
+    <p>Just me, myself and I, exploring the universe of unknownment. I have a heart of love and an interest of lorem ipsum and mauris neque quam blog. I want to share my world with you. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+    <hr>
+    <button class="w3-button w3-teal w3-padding-large w3-hover-black" onclick="location.href='#'">Watch</button>
+</div>  
+      
+
+  </div>
+</body>
+</html>

@@ -4,6 +4,7 @@ import "strings"
 
 type Reducer func([]Video) []Video
 
+// todo: if user puts 'season X' or 'episode Y', filter by those fields
 func NewSearchReducer(search string) Reducer {
 	words := strings.Split(strings.ToLower(search), " ")
 	return func(videos []Video) []Video {
