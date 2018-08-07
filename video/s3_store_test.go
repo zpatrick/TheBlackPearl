@@ -15,7 +15,7 @@ func TestS3StoreListVideos(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockS3 := mocks.NewMockS3API(ctrl)
-	store := NewS3Store("table", mockS3)
+	store := NewS3Store("bucket", "/path", mockS3)
 
 	result, err := store.ListVideos()
 	if err != nil {

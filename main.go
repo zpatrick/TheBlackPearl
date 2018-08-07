@@ -17,6 +17,10 @@ import (
 	"github.com/zpatrick/fireball"
 )
 
+
+// Searching for poster: use 630x1200 size
+// Shorten urls using https://bitly.com/
+
 /*
 Design:
   Routes:
@@ -48,6 +52,7 @@ const (
 	FlagAWSSecretKey = "aws-secret-key"
 	FlagAWSRegion    = "aws-region"
 	FlagS3Bucket     = "s3-bucket"
+	 FlagS3BucketPath     = "s3-bucket-path"
 )
 
 const (
@@ -59,11 +64,19 @@ const (
 	EnvVarAWSSecretKey = "TBP_AWS_SECRET_KEY"
 	EnvVarAWSRegion    = "TBP_AWS_REGION"
 	EnvVarS3Bucket     = "TBP_S3_BUCKET"
+	EnvVarS3BucketPath     = "TBP_S3_BUCKET_PATH"
 )
 
+var Version string
+
 func main() {
+	if Version == "" {
+		Version = "0.0.0"
+	}
+
 	app := cli.NewApp()
 	app.Name = "The Black Pearl"
+	app.Version = Version
 	app.Flags = []cli.Flag{
 		cli.IntFlag{
 			Name:   FlagPort,
@@ -99,6 +112,11 @@ func main() {
 			Name:   FlagS3Bucket,
 			EnvVar: EnvVarS3Bucket,
 		},
+		cli.StringFlag{
+                        Name:   FlagS3BucketPath,
+                        EnvVar: EnvVarS3BucketPath,
+                	Value: "/",
+		},
 	}
 
 	app.Before = func(c *cli.Context) error {
@@ -132,7 +150,7 @@ func main() {
 			WithRegion(c.String(FlagAWSRegion))
 		session := session.New(config)
 
-		store := video.NewS3Store(c.String(FlagS3Bucket), s3.New(session))
+		store := video.NewS3Store(c.String(FlagS3Bucket), c.String(FlagS3BucketPath), s3.New(session))
 		rootController := controllers.NewRootController(store)
 		videoController := controllers.NewVideoController(store)
 

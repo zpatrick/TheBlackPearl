@@ -10,7 +10,6 @@ import (
 )
 
 const (
-	BucketKeyPrefix = "videos/"
 	SeriesTag       = "Series"
 	SeasonTag       = "Season"
 	EpisodeTag      = "Episode"
@@ -19,12 +18,14 @@ const (
 
 type S3Store struct {
 	bucket string
+	path string
 	s3     s3iface.S3API
 }
 
-func NewS3Store(bucket string, s3 s3iface.S3API) *S3Store {
+func NewS3Store(bucket, path string, s3 s3iface.S3API) *S3Store {
 	return &S3Store{
 		bucket: bucket,
+		path: path,
 		s3:     s3,
 	}
 }
@@ -62,7 +63,7 @@ func (s *S3Store) ListVideos() ([]Video, error) {
 func (s *S3Store) listVideoKeys() ([]string, error) {
 	input := &s3.ListObjectsV2Input{
 		Bucket: aws.String(s.bucket),
-		Prefix: aws.String(BucketKeyPrefix),
+		Prefix: aws.String(s.path),
 	}
 
 	if err := input.Validate(); err != nil {
